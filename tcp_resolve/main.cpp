@@ -23,11 +23,12 @@ int main(int argc, const char * argv[]) {
     
     auto ep = resolver.resolve(host, service, ec);
     
+    // if 0, then success
     if(!ec) {
         for(auto &endpoint : ep) {
-            std::cout << endpoint.endpoint() << "\n";
-            std::cout << endpoint.host_name() << "\n";
-            std::cout << endpoint.service_name() << "\n";
+            std::cout << endpoint.endpoint() << "\n";   // prints out apples ip address
+            std::cout << endpoint.host_name() << "\n";  // prints out www.apple.com
+            std::cout << endpoint.service_name() << "\n";   // used https, so it returns that
         }
     }
     return 0;
