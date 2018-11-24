@@ -7,9 +7,28 @@
 //
 
 #include <iostream>
+#include <string>
+#include <experimental/net>
+
+namespace net = std::experimental::net;
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    net::io_context ioc;
+    net::ip::tcp::resolver resolver{ioc};
+    
+    std::string host("www.apple.com"), service("https");
+    
+    std::error_code ec;
+    
+    auto ep = resolver.resolve(host, service, ec);
+    
+    if(!ec) {
+        for(auto &endpoint : ep) {
+            std::cout << endpoint.endpoint() << "\n";
+            std::cout << endpoint.host_name() << "\n";
+            std::cout << endpoint.service_name() << "\n";
+        }
+    }
     return 0;
 }
